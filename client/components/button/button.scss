@@ -1,0 +1,23 @@
+@import "../../src/const/const";
+
+.button {
+  border-radius: 10px;
+  background-color: $color-divider;
+  cursor: pointer;
+  @include transition(1s);
+
+  &__container {
+    height: 100%;
+    display: flex;
+    .text-container {
+      margin: auto;
+      @include title-text();
+      text-transform: uppercase;
+      color: white;
+    }
+  }
+
+  &:hover {
+    background-color: $color-divider-dark;
+  }
+}

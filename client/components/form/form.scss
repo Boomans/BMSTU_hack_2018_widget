@@ -1,0 +1,23 @@
+.form {
+  display: flex;
+
+  &__container {
+    margin: auto;
+    background-color: #f3f3f3;
+    border-radius: 10px;
+    padding: 10px;
+    display: inline-block;
+
+    &__content {
+      display: flex;
+
+      &_vertical {
+        flex-direction: column;
+      }
+
+      &_horizontal {
+        flex-direction: row;
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+@import "../../src/const/const";
+
+.label {
+
+  &__container {
+    @include title-text();
+    color: $text-color-light;
+  }
+}
+
+.label-title {
+  display: flex;
+  div {
+    margin: auto;
+  }
+}

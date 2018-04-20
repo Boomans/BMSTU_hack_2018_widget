@@ -1,0 +1,33 @@
+$font-family: HelveticaNeue;
+$text-color-light: #94a3a3;
+$text-color-dark: #636363;
+$color-divider: #30cecb;
+$color-divider-dark: #259794;
+
+@mixin title-text() {
+  font-family: $font-family;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.2px;
+  text-align: left;
+}
+
+@mixin title($fontSize) {
+  font-size: $fontSize;
+  font-weight: bold;
+  color: $text-color-light;
+
+  @include title-text();
+
+  &:hover {
+    color: $text-color-dark;
+  }
+}
+
+@mixin transition($t) {
+  -webkit-transition: $t ease-out;
+  -o-transition: $t ease-out;
+  -moz-transition: $t ease-out;
+  transition: $t ease-out;
+}

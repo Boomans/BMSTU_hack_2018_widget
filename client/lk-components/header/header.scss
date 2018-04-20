@@ -1,0 +1,24 @@
+@import "../../src/const/const";
+
+.lk-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 73px;
+  background-color: #f3f3f3;
+
+  &__container {
+    ul {
+      display: flex;
+      flex-direction: row;
+      list-style-type: none;
+
+      li {
+        padding: 10px;
+        @include title(20px);
+        cursor: pointer;
+      }
+    }
+  }
+}

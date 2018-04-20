@@ -1,0 +1,14 @@
+(function () {
+    window.widget = {};
+    window.widget.data = JSON.parse('{template:"{data.widget}"}');
+
+    if(document.readyState === 'complete') {
+        ready();
+    } else {
+        document.addEventListener('DOMContentLoaded', ready);
+    }
+
+    function ready() {
+        {template:"{data.code}"}
+    }
+})();
