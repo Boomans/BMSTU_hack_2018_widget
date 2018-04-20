@@ -17,10 +17,10 @@ export default class MainSection extends React.Component {
         this._mainContainerId = `widget-container-${Math.random()}`;
         this.state = {
             workAreaTop: 0,
-            messages: []
+            messages: [],
+            commandText: ''
         };
 
-        this._command = null;
         this._commandEditTextId = `widget-command-${Math.random()}`;
 
         this._initStyles();
@@ -55,7 +55,7 @@ export default class MainSection extends React.Component {
                 <Form style={{marginTop: 10}}>
                     <EditText id={this._commandEditTextId} onChange={this._onEditTextChange}
                               style={{width: 500, height: 42}}
-                              placeholder='Введите сообщение'/>
+                              placeholder='Введите сообщение' text={this.state.commandText}/>
                     <Button text='Отправить' style={{marginLeft: 10, width: 150, height: 42}}
                             onClick={this._onSendClick}/>
                 </Form>
@@ -74,12 +74,12 @@ export default class MainSection extends React.Component {
     }
 
     _onSendClick() {
-        if (!this._command || this._waitingResponse) return;
+        if (this.state.commandText.trim() === '' || this._waitingResponse) return;
 
         this.setState({
             messages: [{
                 isCommand: true,
-                text: this._command
+                text: this.state.commandText
             }]
         });
 
@@ -95,14 +95,14 @@ export default class MainSection extends React.Component {
             });
 
             const bodyFormData = new FormData();
-            bodyFormData.set('message', this._command);
+            bodyFormData.set('message', this.state.commandText);
             bodyFormData.set('meta_data', JSON.stringify({
-                account_id: Math.random() * 1000000
+                account_id: parseInt(Math.random() * 1000000)
             }));
 
             httpRequest({
                 method: 'POST',
-                url: 'http://192.168.43.195:5000',
+                url: window.widget.data.botServerLink,
                 data: bodyFormData,
                 headers: {
                     'Content-Type': 'multipart/form-data'
@@ -136,17 +136,31 @@ export default class MainSection extends React.Component {
                     this._waitingResponse = false;
                 });
 
-            this._command = null;
+            this.setState({
+                commandText: ''
+            });
         }, 500);
     }
 
     _onEditTextChange(e) {
-        this._command = e.target.value;
+        this.setState({
+            commandText: e.target.value
+        });
     }
 
     _analyseResponse(res) {
-        ///account/payment?money=100&account=930606.1832905095
-        console.log(res);
-        // window.globalAction.openPayment();
+        if (!res.action) return;
+
+        const split = res.action.split('?');
+        const action = split[0].split('/').slice(1);
+        const params = split[1].split('&').reduce((result, curr, i) => {
+            const paramSplit = curr.split('=');
+            result[paramSplit[0]] = paramSplit[1];
+            return result;
+        }, {});
+
+        if (action[1] === 'payment') {
+            window.globalAction.openPayment(params);
+        }
     }
 }

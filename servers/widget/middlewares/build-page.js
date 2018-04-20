@@ -13,7 +13,8 @@ module.exports = (req, res) => {
             widget: JSON.stringify({
                 containerId: req.query.containerId,
                 cookieKey: req.query.cookieKey,
-                stylesLink: `${host}/build/client/${name}.bundle.${isProd ? 'min.' : ''}css`
+                stylesLink: `${host}/build/client/${name}.bundle.${isProd ? 'min.' : ''}css`,
+                botServerLink: 'http://192.168.43.195:5000'
             })
         }
     });

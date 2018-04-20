@@ -10,7 +10,7 @@ export default class EditText extends React.Component {
         return (
             <div className='edit-text'>
                 <div className='edit-text__container' style={this.props.style}>
-                    <input style={this.props.inputStyle} id={this.props.id} type='text' placeholder={this.props.placeholder} onChange={this.props.onChange}/>
+                    <input value={this.props.text || ''} style={this.props.inputStyle} id={this.props.id} type='text' placeholder={this.props.placeholder} onChange={this.props.onChange}/>
                 </div>
             </div>
         )

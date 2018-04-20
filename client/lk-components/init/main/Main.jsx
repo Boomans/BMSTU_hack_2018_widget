@@ -25,10 +25,10 @@ export default class MainSection extends React.Component {
 
         this.state = {
             isBlockerHidden: true,
-            isLoginHidden: false
+            isLoginHidden: false,
+            loginText: '',
+            passText: ''
         };
-
-        this._loginData = {};
     }
 
     componentDidMount() {
@@ -36,8 +36,8 @@ export default class MainSection extends React.Component {
         this._checkCookie();
 
         window.globalAction = {
-            openPayment: () => {
-                const content = this._getPopupContent('payment');
+            openPayment: (params) => {
+                const content = this._getPopupContent('payment', params);
                 this._mountPopup(content);
             }
         };
@@ -57,9 +57,10 @@ export default class MainSection extends React.Component {
                     <div id='bot-container'/>
                     <Form isHidden={this.state.isLoginHidden} style={{marginTop: 10}}>
                         <EditText id='lk-login' onChange={this._onEditTextChange} style={{width: 300, height: 42}}
-                                  placeholder='Логин'/>
+                                  placeholder='Логин' text={this.state.loginText}/>
                         <EditText id='lk-pass' onChange={this._onEditTextChange}
-                                  style={{width: 300, height: 42, marginLeft: 10}} placeholder='Пароль'/>
+                                  style={{width: 300, height: 42, marginLeft: 10}} placeholder='Пароль'
+                                  text={this.state.passText}/>
                         <Button text='Войти' style={{marginLeft: 10, width: 150, height: 42}}
                                 onClick={this._onLoginClick}/>
                     </Form>
@@ -85,14 +86,14 @@ export default class MainSection extends React.Component {
         ReactDOM.unmountComponentAtNode(this._popupContainer);
     }
 
-    _getPopupContent(key) {
+    _getPopupContent(key, params) {
         const content = {
             'payment': (<div><Label style={{fontSize: 35}} isTitle={true} text='Пополнение счёта'/>
                 <Label text='Счет' style={{fontSize: 24}}/>
-                <EditText placeholder='' style={{height: 60, marginTop: 8}} inputStyle={{backgroundColor: '#f3f3f3'}}/>
+                <EditText placeholder='' text={params.account} style={{height: 60, marginTop: 8}} inputStyle={{backgroundColor: '#f3f3f3'}}/>
                 <Label text='Сумма' style={{fontSize: 24, marginTop: 22}}/>
-                <EditText placeholder='' style={{height: 60, marginTop: 8}} inputStyle={{backgroundColor: '#f3f3f3'}}/>
-                <Button text='Пополнить' style={{height: 60, marginTop: 29}}/></div>)
+                <EditText placeholder='' text={params.money} style={{height: 60, marginTop: 8}} inputStyle={{backgroundColor: '#f3f3f3'}}/>
+                <Button onClick={this._unmountPopup} text='Пополнить' style={{height: 60, marginTop: 29}}/></div>)
         };
 
         return content[key];
@@ -119,19 +120,21 @@ export default class MainSection extends React.Component {
 
     _onEditTextChange(e) {
         const keys = {
-            'lk-login': 'login',
-            'lk-pass': 'pass'
+            'lk-login': 'loginText',
+            'lk-pass': 'passText'
         };
 
-        this._loginData[keys[e.target.id]] = e.target.value;
+        const newState = {};
+        newState[keys[e.target.id]] = e.target.value;
+        this.setState(newState);
     }
 
     _onLoginClick() {
         this._showBlocker();
 
         setTimeout(() => {
-            if (this._loginData.login && this._loginData.pass) {
-                cookieUtils.set(COOKIE_KEY, `${this._loginData.login}_${this._loginData.pass}`);
+            if (this.state.loginText && this.state.passText) {
+                cookieUtils.set(COOKIE_KEY, `${this.state.loginText}_${this.state.passText}`);
             }
 
             this._hideBlocker();
