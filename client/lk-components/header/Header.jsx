@@ -8,7 +8,7 @@ export default class Header extends React.Component {
 
     render() {
         return (
-            <div className='lk-header'>
+            <div className='lk-header' style={this.props.style}>
                 <div className='lk-header__container'>
                     <ul>
                     {this.props.titles.map((title, i) => {

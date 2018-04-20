@@ -10,7 +10,8 @@ module.exports = (req, res) => {
         data: {
             code: fs.readFileSync(__dirname + `/../../../build/client/${name}.bundle.js`),
             widget: JSON.stringify({
-                containerId: req.query.containerId
+                containerId: req.query.containerId,
+                cookieKey: req.query.cookieKey
             })
         }
     });

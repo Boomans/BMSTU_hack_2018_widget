@@ -8,7 +8,9 @@ module.exports = (req, res) => {
 
     res.render(name, {
         data: {
-            global: JSON.stringify({})
+            global: JSON.stringify({
+                cookieKey: 'fleetcor-lk'
+            })
         },
         res: {
             bundles: {

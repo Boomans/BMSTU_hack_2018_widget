@@ -4,7 +4,7 @@
 }
 
 .main-content {
-  margin-top: 73px;
+  margin-top: 146px;
 }
 
 html, body {
@@ -16,4 +16,11 @@ html, body {
 
 .hidden {
   display: none !important;
+}
+
+.login-container {
+  width: 100%;
+  top: 73px;
+  left: 0;
+  position: fixed;
 }

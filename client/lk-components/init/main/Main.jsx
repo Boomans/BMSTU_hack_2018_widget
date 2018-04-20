@@ -9,7 +9,7 @@ import Button from '../../../components/button/Button.jsx';
 import Blocker from '../../../components/blocker/Blocker.jsx';
 import cookieUtils from '../../../src/utils/cookie.js';
 
-const COOKIE_KEY = 'fleetcor-lk';
+const COOKIE_KEY = window.data.cookieKey;
 
 export default class MainSection extends React.Component {
     constructor(props) {
@@ -24,6 +24,11 @@ export default class MainSection extends React.Component {
         };
 
         this._loginData = {};
+
+        //asshole
+        window.removeCookie = () => {
+            cookieUtils.remove(COOKIE_KEY);
+        };
     }
 
     componentDidMount() {
@@ -35,9 +40,9 @@ export default class MainSection extends React.Component {
             <div>
                 <Blocker isHidden={this.state.isBlockerHidden}/>
                 <Header titles={['Карты', 'Сервисы', 'АЗС', 'Клиенты', 'Акции', 'Контакты']}/>
-                <div className='main-content'>
+                <div className='login-container'>
                     <Divider/>
-
+                    <div id='bot-container'/>
                     <Form isHidden={this.state.isLoginHidden} style={{marginTop: 10}}>
                         <EditText id='lk-login' onChange={this._onEditTextChange} style={{width: 300, height: 42}} placeholder='Логин'/>
                         <EditText id='lk-pass' onChange={this._onEditTextChange} style={{width: 300, height: 42, marginLeft: 10}} placeholder='Пароль'/>
@@ -48,6 +53,9 @@ export default class MainSection extends React.Component {
                     <Label isHidden={this.state.isLoginHidden} isTitle={true}
                            text='Чтобы воспользоваться ботом, нужно авторизоваться'
                            style={{marginTop: 10}}/>
+                </div>
+                <div className='main-content'>
+
                 </div>
             </div>
         )
@@ -80,7 +88,6 @@ export default class MainSection extends React.Component {
         };
 
         this._loginData[keys[e.target.id]] = e.target.value;
-        console.log(this._loginData);
     }
 
     _onLoginClick() {
