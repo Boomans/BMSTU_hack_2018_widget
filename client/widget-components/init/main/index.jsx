@@ -6,6 +6,8 @@ import cookieUtils from '../../../src/utils/cookie.js';
 
 const cookieKey = window.widget.data.cookieKey;
 const containerId = window.widget.data.containerId;
+let mounted = false;
+
 if (!cookieKey) {
     mount();
 } else {
@@ -19,12 +21,18 @@ if (!cookieKey) {
 }
 
 function mount() {
+    if (mounted) return;
+
     ReactDOM.render(
         <Main/>,
         document.getElementById(containerId)
     );
+    mounted = true;
 }
 
 function unmount() {
+    if (!mounted) return;
+
     ReactDOM.unmountComponentAtNode(document.getElementById(containerId));
+    mounted = false;
 }

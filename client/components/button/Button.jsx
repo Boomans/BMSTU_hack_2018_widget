@@ -8,7 +8,7 @@ export default class Button extends React.Component {
 
     render() {
         return (
-            <div className='button' style={this.props.style} onClick={this.props.onClick}>
+            <div className={`button${this.props.isHidden ? ' hidden' : ''}`} style={this.props.style} onClick={this.props.onClick}>
                 <div className='button__container'>
                     <div className='text-container'>
                         {this.props.text}

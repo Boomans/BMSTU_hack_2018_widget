@@ -4,6 +4,8 @@ $text-color-dark: #636363;
 $color-divider: #30cecb;
 $color-divider-dark: #259794;
 
+$message-bg-color: #9b9b9b;
+
 @mixin title-text() {
   font-family: $font-family;
   font-style: normal;

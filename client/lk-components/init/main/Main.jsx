@@ -16,6 +16,7 @@ export default class MainSection extends React.Component {
         super(props);
 
         this._onLoginClick = this._onLoginClick.bind(this);
+        this._onLogoutClick = this._onLogoutClick.bind(this);
         this._onEditTextChange = this._onEditTextChange.bind(this);
 
         this.state = {
@@ -40,6 +41,8 @@ export default class MainSection extends React.Component {
             <div>
                 <Blocker isHidden={this.state.isBlockerHidden}/>
                 <Header titles={['Карты', 'Сервисы', 'АЗС', 'Клиенты', 'Акции', 'Контакты']}/>
+                <Button isHidden={!this.state.isLoginHidden} text='Выйти' style={{position: 'fixed', top: 15, right: 15, width: 150, height: 42}}
+                        onClick={this._onLogoutClick}/>
                 <div className='login-container'>
                     <Divider/>
                     <div id='bot-container'/>
@@ -62,11 +65,9 @@ export default class MainSection extends React.Component {
     }
 
     _checkCookie() {
-        if (cookieUtils.get(COOKIE_KEY)) {
-            this.setState({
-                isLoginHidden: true
-            });
-        }
+        this.setState({
+            isLoginHidden: !!cookieUtils.get(COOKIE_KEY)
+        });
     }
 
     _hideBlocker() {
@@ -93,13 +94,18 @@ export default class MainSection extends React.Component {
     _onLoginClick() {
         this._showBlocker();
 
-        if (this._loginData.login && this._loginData.pass) {
-            cookieUtils.set(COOKIE_KEY, `${this._loginData.login}_${this._loginData.pass}`);
-        }
-
         setTimeout(() => {
+            if (this._loginData.login && this._loginData.pass) {
+                cookieUtils.set(COOKIE_KEY, `${this._loginData.login}_${this._loginData.pass}`);
+            }
+
             this._hideBlocker();
             this._checkCookie();
         }, 2000);
+    }
+
+    _onLogoutClick() {
+        cookieUtils.remove(COOKIE_KEY);
+        this._checkCookie();
     }
 }
