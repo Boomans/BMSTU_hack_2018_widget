@@ -15,7 +15,7 @@ export default class Message extends React.Component {
 
     render() {
         return (
-            <div className='message-container'>
+            <div className='message-container' style={{width: 670}}>
                 <div id={this._messageContainerId} className='message-container__content'>
                     {this.props.messages.map((textData, i) => {
                         const {isCommand, text, isWaiting} = textData;

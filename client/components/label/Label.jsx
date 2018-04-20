@@ -9,9 +9,7 @@ export default class Label extends React.Component {
     render() {
         return (
             <div className={`label${this.props.isTitle ? ' label-title' : ''}${this.props.isHidden ? ' hidden' : ''}`} style={this.props.style}>
-                <div className='label__container'>
-                    {this.props.text}
-                </div>
+                <div className='label__container' dangerouslySetInnerHTML={{__html: this.props.text}}/>
             </div>
         )
     }
