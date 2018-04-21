@@ -1,0 +1,26 @@
+@import "../../src/const/const";
+
+.my-cards-container {
+  &__item {
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    .info-item {
+      padding-top: 10px;
+
+      &__image {
+        display: inline-flex;
+      }
+
+      &__value {
+        //font-size: 12pt;
+        display: inline-flex;
+        vertical-align: top;
+        padding-top: 2px;
+        padding-left: 10px;
+
+      }
+
+    }
+  }
+}

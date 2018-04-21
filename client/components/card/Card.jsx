@@ -1,4 +1,5 @@
 import React from 'react';
+import Label from '../../components/label/Label.jsx'
 import './card.scss';
 
 export default class Card extends React.Component {
@@ -14,19 +15,12 @@ export default class Card extends React.Component {
                         <img src={this.props.img} width={this.props.imgSize[0]} height={this.props.imgSize[1]}/>
                     </div>
                     <div className='card__container__info'>
-
-                        {/*<div className='skill' key={`skill-${i}`}>*/}
-                            {/*<img*/}
-                                {/*src={`/build/res/img/skills-icons/white/icons8-${skill.icon}.png`}*/}
-                                {/*alt=""*/}
-                                {/*style={{background: skill.color}}*/}
-                                {/*width={this._iconSize}*/}
-                                {/*height={this._iconSize}*/}
-                            {/*/>*/}
-                            {/*<div className='skill__text'>*/}
-                                {/*<Label text={skill.text} type='midd-text'/>*/}
-                            {/*</div>*/}
-                        {/*</div>*/}
+                        <div className='card__container__info__title'>
+                            <Label text={`<h3 style="text-align:center;margin:0;color:#418c8b">${this.props.title}</h3>`}/>
+                        </div>
+                        {
+                            this.props.content
+                        }
                     </div>
                 </div>
             </div>)
