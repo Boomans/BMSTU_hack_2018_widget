@@ -24,6 +24,12 @@ export default class MainSection extends React.Component {
         this._commandEditTextId = `widget-command-${Math.random()}`;
 
         this._initStyles();
+
+        document.onkeyup = (e) => {
+            if (e.key === 'Enter') {
+                this._onSendClick();
+            }
+        };
     }
 
     _initStyles() {
@@ -63,7 +69,7 @@ export default class MainSection extends React.Component {
                 <div className='widget-container__workarea' style={{
                     position: 'fixed',
                     top: this.state.workAreaTop,
-                    height: window.innerHeight - this.state.workAreaTop
+                    // height: window.innerHeight - this.state.workAreaTop
                 }}>
                     <div className='widget-container__workarea-container' style={{}}>
                         <Message messages={this.state.messages}/>
@@ -80,19 +86,13 @@ export default class MainSection extends React.Component {
             messages: [{
                 isCommand: true,
                 text: this.state.commandText
+            }, {
+                isWaiting: true
             }]
         });
 
-        this._commandEditText.value = '';
-
         setTimeout(() => {
-            // показываем балун ожидания
             this._waitingResponse = true;
-            this.setState({
-                messages: this.state.messages.concat([{
-                    isWaiting: true
-                }])
-            });
 
             const bodyFormData = new FormData();
             bodyFormData.set('message', this.state.commandText);
@@ -115,7 +115,8 @@ export default class MainSection extends React.Component {
                             messages: this.state.messages.concat([{
                                 isCommand: false,
                                 text: res.message
-                            }])
+                            }]),
+                            commandText: ''
                         });
                     }
                     this._waitingResponse = false;
@@ -139,7 +140,7 @@ export default class MainSection extends React.Component {
             this.setState({
                 commandText: ''
             });
-        }, 500);
+        }, 1500);
     }
 
     _onEditTextChange(e) {
