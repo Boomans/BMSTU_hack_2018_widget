@@ -17,11 +17,14 @@ export default class MainSection extends React.Component {
 
         this._onSendClick = this._onSendClick.bind(this);
         this._onEditTextChange = this._onEditTextChange.bind(this);
+        this._onMouseToggle = this._onMouseToggle.bind(this);
+
         this._mainContainerId = `widget-container-${Math.random()}`;
         this.state = {
             workAreaTop: 0,
             messages: [],
-            commandText: ''
+            commandText: '',
+            workAreaHidden: true
         };
 
         this._commandEditTextId = `widget-command-${Math.random()}`;
@@ -59,24 +62,26 @@ export default class MainSection extends React.Component {
 
     render() {
         return (
-            <div id={this._mainContainerId} className='widget-container'>
+            <div id={this._mainContainerId} className='widget-container' onMouseEnter={this._onMouseToggle} /*onMouseLeave={this._onMouseToggle}*/>
                 <Label isTitle={true}
                        text='Напишите сообщение боту и он выполнит вашу просьбу'
                        style={{marginTop: 10}}/>
                 <Form style={{marginTop: 10}}>
                     <EditText id={this._commandEditTextId} onChange={this._onEditTextChange}
                               style={{width: 500, height: 42}}
-                              placeholder='Введите сообщение' text={this.state.commandText}/>
+                              placeholder='Введите сообщение' text={this.state.commandText}
+                    />
                     <Button text='Отправить' style={{marginLeft: 10, width: 150, height: 42}}
                             onClick={this._onSendClick}/>
                 </Form>
 
-                <div className='widget-container__workarea' id='workarea' style={{
-                    position: 'fixed',
-                    top: this.state.workAreaTop,
-                    // height: window.innerHeight - this.state.workAreaTop
-                }}>
-                    <div className='widget-container__workarea-container' style={{}}>
+                <div className={`widget-container__workarea${this.state.workAreaHidden ? ' hidden' : ''}`} id='workarea'
+                     style={{
+                         position: 'fixed',
+                         top: this.state.workAreaTop,
+                         // height: window.innerHeight - this.state.workAreaTop
+                     }}>
+                    <div className={`widget-container__workarea-container`} style={{}}>
                         <Message messages={this.state.messages}/>
                         <div id='under-message-container'>
 
@@ -85,6 +90,18 @@ export default class MainSection extends React.Component {
                 </div>
             </div>
         )
+    }
+
+    _onMouseToggle(e) {
+        if (e.type === 'mouseenter') {
+            this.setState({
+                workAreaHidden: false
+            });
+        } else {
+            this.setState({
+                workAreaHidden: true
+            });
+        }
     }
 
     _mountUnderMessage(children) {

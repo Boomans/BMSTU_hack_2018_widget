@@ -1,14 +1,15 @@
 .widget-container {
   flex-direction: column;
+  width: 710px;
+  margin: auto;
 
   &__workarea {
-    width: 100%;
     display: flex;
     background-color: white;
     overflow-y: scroll;
 
     &-container {
-      margin: 0 auto;
+      padding: 0 20px 0 20px;
     }
   }
 }
