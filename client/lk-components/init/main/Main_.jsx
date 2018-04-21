@@ -11,6 +11,8 @@ import Button from '../../../components/button/Button.jsx';
 import Blocker from '../../../components/blocker/Blocker.jsx';
 import cookieUtils from '../../../src/utils/cookie.js';
 import Popup from '../../../components/popup/Popup.jsx';
+// import CardContainer from '../../../widget-components/cards-container/CardsContainer.jsx'
+import MyCardContainer from '../../../lk-components/my-cards-container/MyCardsContainer.jsx'
 
 const COOKIE_KEY = window.data.cookieKey;
 
@@ -29,6 +31,8 @@ export default class MainSection extends React.Component {
         };
 
         this._loginData = {};
+        this._loginContainerId = `login-container-${Math.random()}`;
+        this._mainContainerId = `main-container-${Math.random()}`;
     }
 
     componentDidMount() {
@@ -41,6 +45,13 @@ export default class MainSection extends React.Component {
                 this._mountPopup(content);
             }
         };
+
+        const loginElement = document.getElementById(this._loginContainerId);
+        if (!loginElement) return;
+
+        const loginElementData = loginElement.getBoundingClientRect();
+
+        document.getElementById(this._mainContainerId).style.marginTop= (loginElementData.top + loginElementData.height) + 'px';
     }
 
     render() {
@@ -52,7 +63,7 @@ export default class MainSection extends React.Component {
                 <Button isHidden={!this.state.isLoginHidden} text='Выйти'
                         style={{position: 'fixed', top: 15, right: 15, width: 150, height: 42}}
                         onClick={this._onLogoutClick}/>
-                <div className='login-container'>
+                <div className='login-container'  id={this._loginContainerId}>
                     <Divider/>
                     <div id='bot-container'/>
                     <Form isHidden={this.state.isLoginHidden} style={{marginTop: 10}}>
@@ -68,8 +79,9 @@ export default class MainSection extends React.Component {
                            text='Чтобы воспользоваться ботом, нужно авторизоваться'
                            style={{marginTop: 10}}/>
                 </div>
-                <div className='main-content'>
-
+                <div className='main-content' id={this._mainContainerId}>
+                    {/*<CardContainer/>*/}
+                    <MyCardContainer/>
                 </div>
             </div>
         )
