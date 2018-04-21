@@ -5,6 +5,8 @@ import Button from '../../../components/button/Button.jsx';
 import Label from '../../../components/label/Label.jsx';
 import Message from '../../message/Message.jsx';
 import httpRequest from '../../../src/utils/http.js';
+import Account from '../../account/Account.jsx';
+import ReactDOM from 'react-dom';
 
 import './main.scss';
 
@@ -49,7 +51,7 @@ export default class MainSection extends React.Component {
             workAreaTop: mainElementData.top + mainElementData.height
         });
 
-        this._commandEditText = document.getElementById(this._commandEditTextId);
+        this._underMessageContainer = document.getElementById('under-message-container');
     }
 
     render() {
@@ -73,13 +75,25 @@ export default class MainSection extends React.Component {
                 }}>
                     <div className='widget-container__workarea-container' style={{}}>
                         <Message messages={this.state.messages}/>
+                        <div id='under-message-container'>
+
+                        </div>
                     </div>
                 </div>
             </div>
         )
     }
 
+    _mountUnderMessage(children) {
+        ReactDOM.render(<div>{children}</div>, this._underMessageContainer);
+    }
+
+    _unmountPopup() {
+        ReactDOM.unmountComponentAtNode(this._underMessageContainer);
+    }
+
     _onSendClick() {
+        this._unmountPopup();
         if (this.state.commandText.trim() === '' || this._waitingResponse) return;
 
         this.setState({
@@ -154,7 +168,7 @@ export default class MainSection extends React.Component {
 
         const split = res.action.split('?');
         const action = split[0].split('/').slice(1);
-        const params = split[1].split('&').reduce((result, curr, i) => {
+        const params = split[1] && split[1].split('&').reduce((result, curr, i) => {
             const paramSplit = curr.split('=');
             result[paramSplit[0]] = paramSplit[1];
             return result;
@@ -162,6 +176,17 @@ export default class MainSection extends React.Component {
 
         if (action[1] === 'payment') {
             window.globalAction.openPayment(params);
+            return;
+        }
+
+        if (action[1] === 'accounts' && !params) {
+            this._mountUnderMessage([1, 2].map((id) => {
+                return (<Account
+                    key={`account-card-${id}`}
+                    account={parseInt(Math.random() * 1000000)}
+                    cardsCount={parseInt(Math.random() * 10)}
+                    money={parseInt(Math.random() * 100000)}/>);
+            }));
         }
     }
 }
