@@ -1,0 +1,30 @@
+@import "../../src/const/const";
+
+.blocker {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.51);
+  display: flex;
+  justify-content: space-around;
+  z-index: 9999999;
+
+  &__container {
+    width: 175px;
+    height: 100px;
+    margin: auto;
+
+    span {
+      display: block;
+      background: $color-divider;
+      width: 7px;
+      height: 10%;
+      border-radius: 14px;
+      margin-right: 5px;
+      float: left;
+      margin-top: 25%;
+    }
+  }
+}
