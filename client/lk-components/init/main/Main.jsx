@@ -11,8 +11,8 @@ import Button from '../../../components/button/Button.jsx';
 import Blocker from '../../../components/blocker/Blocker.jsx';
 import cookieUtils from '../../../src/utils/cookie.js';
 import Popup from '../../../components/popup/Popup.jsx';
-// import CardContainer from '../../../widget-components/cards-container/CardsContainer.jsx'
-import MyCardContainer from '../../../lk-components/my-cards-container/MyCardsContainer.jsx'
+import CardContainer from '../../../widget-components/cards-container/CardsContainer.jsx'
+// import MyCardContainer from '../../../lk-components/my-cards-container/MyCardsContainer.jsx'
 
 const COOKIE_KEY = window.data.cookieKey;
 
@@ -31,13 +31,10 @@ export default class MainSection extends React.Component {
             loginText: '',
             passText: ''
         };
-{/*<<<<<<< HEAD:client/lk-components/init/main/Main_.jsx*/}
 
         this._loginData = {};
         this._loginContainerId = `login-container-${Math.random()}`;
         this._mainContainerId = `main-container-${Math.random()}`;
-// =======
-// >>>>>>> e15464251bd7df738b87bf15201d7719f30c5656:client/lk-components/init/main/Main.jsx
     }
 
     componentDidMount() {
@@ -86,8 +83,8 @@ export default class MainSection extends React.Component {
                            style={{marginTop: 10}}/>
                 </div>
                 <div className='main-content' id={this._mainContainerId}>
-                    {/*<CardContainer/>*/}
-                    <MyCardContainer/>
+                    <CardContainer/>
+                    {/*<MyCardContainer/>*/}
                 </div>
             </div>
         )

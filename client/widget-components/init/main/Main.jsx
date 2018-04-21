@@ -7,6 +7,7 @@ import Message from '../../message/Message.jsx';
 import httpRequest from '../../../src/utils/http.js';
 import Account from '../../account/Account.jsx';
 import ReactDOM from 'react-dom';
+import MyCardContainer from '../../../lk-components/my-cards-container/MyCardsContainer.jsx'
 
 import './main.scss';
 
@@ -52,6 +53,8 @@ export default class MainSection extends React.Component {
         });
 
         this._underMessageContainer = document.getElementById('under-message-container');
+
+        document.getElementById('workarea').style.height = (window.innerHeight - mainElementData.top - mainElementData.height) + 'px';
     }
 
     render() {
@@ -68,7 +71,7 @@ export default class MainSection extends React.Component {
                             onClick={this._onSendClick}/>
                 </Form>
 
-                <div className='widget-container__workarea' style={{
+                <div className='widget-container__workarea' id='workarea' style={{
                     position: 'fixed',
                     top: this.state.workAreaTop,
                     // height: window.innerHeight - this.state.workAreaTop
@@ -187,6 +190,12 @@ export default class MainSection extends React.Component {
                     cardsCount={parseInt(Math.random() * 10)}
                     money={parseInt(Math.random() * 100000)}/>);
             }));
+        }
+
+        if (action[1] === 'cards' && !params) {
+            this._mountUnderMessage(
+                <MyCardContainer/>
+            )
         }
     }
 }

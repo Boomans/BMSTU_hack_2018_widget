@@ -14,7 +14,7 @@ module.exports = (req, res) => {
                 containerId: req.query.containerId,
                 cookieKey: req.query.cookieKey,
                 stylesLink: `${host}/build/client/${name}.bundle.${isProd ? 'min.' : ''}css`,
-                botServerLink: 'http://192.168.43.195:5000'
+                botServerLink: 'http://128.199.199.54:5000'
             })
         }
     });
